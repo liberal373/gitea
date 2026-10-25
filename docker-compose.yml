@@ -1,0 +1,25 @@
+# networks:
+#   gitea:
+#     external: false
+
+# volumes:
+#   gitea:
+#     driver: local
+
+services:
+  server:
+    image: docker.gitea.com/gitea:28.2.0
+    container_name: gitea
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - TZ=Asia/Shanghai
+    restart: always
+    # networks:
+    #   - gitea
+    volumes:
+      # - gitea:/data
+      - ./data:/data
+    ports:
+      - "3000:3000"
+      - "2222:22"
