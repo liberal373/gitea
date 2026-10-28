@@ -22,4 +22,18 @@ services:
       - ./data:/data
     ports:
       - "3000:3000"
-      - "2222:22"
+  runner:
+    image: docker.io/gitea/runner:5-dind
+    restart: always
+    depends_on:
+      - server
+    privileged: true
+    environment:
+      GITEA_INSTANCE_URL: ${GITEA_INSTANCE_URL}
+      GITEA_RUNNER_REGISTRATION_TOKEN: ${GITEA_RUNNER_REGISTRATION_TOKEN}
+    volumes:
+      - ./data-runner:/data
+      - runner-docker:/var/lib/docker
+
+volumes:
+  runner-docker:
